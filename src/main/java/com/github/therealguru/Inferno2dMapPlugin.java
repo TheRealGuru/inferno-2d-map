@@ -23,6 +23,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Slf4j
 @PluginDescriptor(
@@ -132,11 +133,11 @@ public class Inferno2dMapPlugin extends Plugin {
     void recalculate() {
         List<ColourRegion> npcLocations = infernoNpcs.stream()
                 .map(InfernoNpc::getColourRegion)
-                .toList();
+                .collect(Collectors.toList());
 
 		List<ColourRegion> pillars = infernoPillars.stream()
                 .map(this::createGameObjectRegion)
-                .toList();
+                .collect(Collectors.toList());
 
         infernoMap = generateBlankMap();
 
