@@ -2,6 +2,7 @@ package com.github.therealguru;
 
 import com.google.inject.Inject;
 import net.runelite.client.ui.PluginPanel;
+import net.runelite.client.util.LinkBrowser;
 
 import javax.swing.*;
 import java.awt.*;
@@ -71,11 +72,11 @@ public class InfernoMapPluginPanel extends PluginPanel {
         openButton.addActionListener(e -> openUrl());
         openButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        buttonPanel.add(Box.createVerticalStrut(5)); // Small spacing at top
+        buttonPanel.add(Box.createVerticalStrut(5));
         buttonPanel.add(copyButton);
-        buttonPanel.add(Box.createVerticalStrut(5)); // Spacing between buttons
+        buttonPanel.add(Box.createVerticalStrut(5));
         buttonPanel.add(openButton);
-        buttonPanel.add(Box.createVerticalStrut(5)); // Small spacing at bottom
+        buttonPanel.add(Box.createVerticalStrut(5));
 
         return buttonPanel;
     }
@@ -87,7 +88,6 @@ public class InfernoMapPluginPanel extends PluginPanel {
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
             clipboard.setContents(selection, null);
 
-            // Optional: Show feedback
             JOptionPane.showMessageDialog(this, "URL copied to clipboard!", "Success", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Failed to copy URL: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -95,23 +95,8 @@ public class InfernoMapPluginPanel extends PluginPanel {
     }
 
     private void openUrl() {
-        try {
-            String url = plugin.generateScoutUrl();
-            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-                Desktop.getDesktop().browse(new URI(url));
-            } else {
-                // Fallback for systems that don't support Desktop
-                JOptionPane.showMessageDialog(this,
-                        "Cannot open browser. URL: " + url,
-                        "Browser Error",
-                        JOptionPane.INFORMATION_MESSAGE);
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this,
-                    "Failed to open URL: " + ex.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
-        }
+        String url = plugin.generateScoutUrl();
+        LinkBrowser.browse(url);
     }
 
     private JPanel createKeyPanel() {

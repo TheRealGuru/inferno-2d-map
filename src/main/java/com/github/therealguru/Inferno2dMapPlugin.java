@@ -126,7 +126,7 @@ public class Inferno2dMapPlugin extends Plugin {
 		infernoNpcs.add(new InfernoNpc(event.getNpc()));
         Coordinate clean = new Coordinate(event.getNpc());
         Coordinate scout = clean.toScoutToolPoint();
-        log.info("Npc has spawned at {} scout coordinate: {}", clean, scout);
+        log.debug("Npc has spawned at {} scout coordinate: {}", clean, scout);
         recalculate();
 	}
 
@@ -181,7 +181,7 @@ public class Inferno2dMapPlugin extends Plugin {
 
         Coordinate clean = new Coordinate(event.getGameObject());
         Coordinate scout = clean.toScoutToolPoint();
-        log.info("Pillar has spawned at {} scout coordinate: {}", clean, scout);
+        log.debug("Pillar has spawned at {} scout coordinate: {}", clean, scout);
         infernoPillars.add(event.getGameObject());
         recalculate();
     }
@@ -303,7 +303,6 @@ public class Inferno2dMapPlugin extends Plugin {
     private boolean pillarExistsAt(int expectedX, int expectedY) {
         return infernoPillars.stream().anyMatch(pillar -> {
             Coordinate scoutCoord = getScoutCoordinate(pillar);
-            log.info("Checkiing if pillar {} is at {} {}", scoutCoord, expectedX, expectedY);
             return scoutCoord.getX() == expectedX && scoutCoord.getY() == expectedY;
         });
     }
